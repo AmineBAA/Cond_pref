@@ -32,6 +32,7 @@ if uploaded_file:
         # 🔍 Aperçu sécurisé
         st.subheader("📋 Aperçu des données chargées")
         st.dataframe(df)
+        
     # 2. Vision Client
     st.subheader("🎯 Vision Client")
     client_id = st.selectbox("Sélectionnez un client", df['code_client'].unique())
