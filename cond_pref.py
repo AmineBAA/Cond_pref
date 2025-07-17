@@ -24,33 +24,33 @@ if uploaded_file:
 
     # 2. Vision Client
     st.subheader("🎯 Vision Client")
-    client_id = st.selectbox("Sélectionnez un client", df['Client_ID'].unique())
-    st.write(df[df['Client_ID'] == client_id])
+    client_id = st.selectbox("Sélectionnez un client", df['code_client'].unique())
+    st.write(df[df['code_client'] == client_id])
 
     # 3. Vision Code Opération
     st.subheader("🔄 Vision par Code Opération")
-    op_counts = df['Code_Operation'].value_counts().reset_index()
-    op_counts.columns = ['Code Opération', 'Nombre de Conditions']
+    op_counts = df['code_operation'].value_counts().reset_index()
+    op_counts.columns = ['code_operation', 'Nombre de Conditions']
     fig_op = px.bar(op_counts, x='Code Opération', y='Nombre de Conditions', title="Répartition par Code Opération")
     st.plotly_chart(fig_op)
 
     # 4. Vision Agence
     st.subheader("🏢 Vision par Agence")
-    agence_counts = df.groupby('Code_Agence')['Client_ID'].nunique().reset_index()
+    agence_counts = df.groupby('code_agence')['code_client'].nunique().reset_index()
     agence_counts.columns = ['Code Agence', 'Nombre de Clients']
     fig_ag = px.bar(agence_counts, x='Code Agence', y='Nombre de Clients', title="Nombre de Clients par Agence")
     st.plotly_chart(fig_ag)
 
     # 5. Tableau interactif avec filtres
     st.subheader("🔍 Filtres dynamiques")
-    agence_filtre = st.multiselect("Filtrer par agence", options=df['Code_Agence'].unique())
-    op_filtre = st.multiselect("Filtrer par opération", options=df['Code_Operation'].unique())
+    agence_filtre = st.multiselect("Filtrer par agence", options=df['code_agence'].unique())
+    op_filtre = st.multiselect("Filtrer par opération", options=df['code_operation'].unique())
 
     df_filtré = df.copy()
     if agence_filtre:
-        df_filtré = df_filtré[df_filtré['Code_Agence'].isin(agence_filtre)]
+        df_filtré = df_filtré[df_filtré['code_agence'].isin(agence_filtre)]
     if op_filtre:
-        df_filtré = df_filtré[df_filtré['Code_Operation'].isin(op_filtre)]
+        df_filtré = df_filtré[df_filtré['code_operation'].isin(op_filtre)]
 
     st.dataframe(df_filtré)
 
