@@ -5,7 +5,7 @@ from PIL import Image
 import gc
 
 # Affichage du logo local (optionnel)
-image = Image.open("logo.png")
+image = Image.open("logo_saham.png")
 st.image(image, width=200)
 
 # Titre de l'application
