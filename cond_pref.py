@@ -31,7 +31,7 @@ if uploaded_file:
     st.subheader("🔄 Vision par Code Opération")
     op_counts = df['code_operation'].value_counts().reset_index()
     op_counts.columns = ['code_operation', 'Nombre de Conditions']
-    fig_op = px.bar(op_counts, x='Code Opération', y='Nombre de Conditions', title="Répartition par Code Opération")
+    fig_op = px.bar(op_counts, x='code_operation', y='Nombre de Conditions', title="Répartition par Code Opération")
     st.plotly_chart(fig_op)
 
     # 4. Vision Agence
