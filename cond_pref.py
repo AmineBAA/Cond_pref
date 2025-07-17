@@ -24,7 +24,7 @@ if uploaded_file:
         st.dataframe(df)
 
         # 2. 🎯 Vision Client
-        if 'Client_ID' in df.columns:
+        if 'code_client' in df.columns:
             st.subheader("🎯 Vision Client")
             client_id = st.selectbox("Sélectionnez un client", df['code_client'].unique())
             st.dataframe(df[df['code_client'] == client_id])
@@ -32,7 +32,7 @@ if uploaded_file:
             st.warning("⚠️ Colonne 'Client_ID' non trouvée.")
 
         # 3. 🔄 Vision par Code Opération
-        if 'Code_Operation' in df.columns:
+        if 'code_operation' in df.columns:
             st.subheader("🔄 Vision par Code Opération")
             op_counts = df['code_operation'].value_counts().reset_index()
             op_counts.columns = ['Code Opération', 'Nombre de Conditions']
@@ -43,7 +43,7 @@ if uploaded_file:
             st.warning("⚠️ Colonne 'Code_Operation' non trouvée.")
 
         # 4. 🏢 Vision par Agence
-        if 'Code_Agence' in df.columns and 'Client_ID' in df.columns:
+        if 'code_agence' in df.columns and 'code_client' in df.columns:
             st.subheader("🏢 Vision par Agence")
             agence_counts = df.groupby('code_agence')['code_client'].nunique().reset_index()
             agence_counts.columns = ['Code Agence', 'Nombre de Clients']
