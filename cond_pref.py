@@ -10,6 +10,11 @@ Original file is located at
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from PIL import Image
+
+# Affichage de l'image locale
+image = Image.open("logo.png")
+st.image(image, width=200)
 
 # Titre de l'application
 st.title("Dashboard - Conditions Préférentielles des Clients")
