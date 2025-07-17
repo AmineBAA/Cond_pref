@@ -55,7 +55,7 @@ if uploaded_file:
 
         # 5. 🔍 Filtres dynamiques
         st.subheader("🔎 Filtres dynamiques")
-        agence_filtre = st.multiselect("Filtrer par agence", options=df['code_Agence'].unique() if 'code_agence' in df.columns else [])
+        agence_filtre = st.multiselect("Filtrer par agence", options=df['code_agence'].unique() if 'code_agence' in df.columns else [])
         op_filtre = st.multiselect("Filtrer par opération", options=df['code_operation'].unique() if 'code_operation' in df.columns else [])
 
         df_filtré = df.copy()
