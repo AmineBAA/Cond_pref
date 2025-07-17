@@ -11,6 +11,8 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from PIL import Image
+import gc 
+
 
 # Affichage de l'image locale
 image = Image.open("logo_saham.png")
@@ -20,13 +22,16 @@ st.image(image, width=200)
 st.title("Dashboard - Conditions Préférentielles des Clients")
 
 # 1. Charger les données
-uploaded_file = st.file_uploader("Téléchargez le fichier Excel", type=["xlsx"])
+uploaded_file = st.file_uploader("📂 Téléchargez le fichier Excel", type=["xlsx"])
+
 if uploaded_file:
-    df = pd.read_excel(uploaded_file)
+    try:
+        # Lecture directe en mémoire (pas d'enregistrement sur disque)
+        df = pd.read_excel(uploaded_file, engine='openpyxl')
 
-    st.subheader("Aperçu des données")
-    st.dataframe(df)
-
+        # 🔍 Aperçu sécurisé
+        st.subheader("📋 Aperçu des données chargées")
+        st.dataframe(df)
     # 2. Vision Client
     st.subheader("🎯 Vision Client")
     client_id = st.selectbox("Sélectionnez un client", df['code_client'].unique())
@@ -59,8 +64,13 @@ if uploaded_file:
 
     st.dataframe(df_filtré)
 
-else:
-    st.info("Veuillez charger un fichier Excel pour commencer.")
+        # 6. 🔐 Nettoyage mémoire pour sécurité
+        del df, df_filtré, op_counts, agence_counts
+        gc.collect()
 
+    except Exception as e:
+        st.error(f"Erreur lors de la lecture du fichier : {e}")
+else:
+    st.info("Veuillez charger un fichier Excel pour démarrer.")
 
 
